@@ -1,31 +1,26 @@
-import './App.css';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Profile from './pages/Profile';
-import SignIn from './pages/SignIn';
-import {useSelector} from 'react-redux'
-import {Navigate} from 'react-router-dom'
+// App.js
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-function App() {
+const App = () => {
+  const count = useSelector(state => state.count);
+  const dispatch = useDispatch();
 
-  const isLoggedIn = useSelector(state => state.isLoggedIn)
+  const increment = () => {
+    dispatch({ type: 'INCREMENT' });
+  };
+
+  const decrement = () => {
+    dispatch({ type: 'DECREMENT' });
+  };
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route exact path="/" element={
-          isLoggedIn 
-          ? <Profile/> 
-          : <Navigate to='/signin'/>
-        } />
-        <Route path="signin" element={
-          !isLoggedIn 
-          ? <SignIn/> 
-          : <Navigate to='/'/>
-        } />
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <h1>Counter: {count}</h1>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+    </div>
   );
-}
+};
 
 export default App;
- 
